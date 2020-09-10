@@ -1,5 +1,7 @@
 from TrafficInfo import TrafficInfo
-from random import choice
+from Flow import Flow
+from random import randrange
+from random import uniform
 
 class TrafficGenerator():
     def __init__(self, xml, load):
@@ -48,4 +50,18 @@ class TrafficGenerator():
         # TODO: Distribution
 
         for c in range(self.calls):
-            tipo = choice[weightVector]
+            tipo = randrange(len(weightVector))
+            src = dst = randrange(numNodes)
+
+            while (dst == src):
+                dst = randrange(numNodes)
+
+            holdingTime = uniform(0.0, meanArrivalTime)
+
+            newFlow = Flow(id, src, dst, time, self.callTypes[tipo].getRate(), holdingTime, self.callTypes[tipo].getCos(), time+(holdingTime * 0.5))
+
+            # time = uniform()
+            # TODO: Events
+            # TODO: Arrival
+            # TODO: Departure
+            id += 1

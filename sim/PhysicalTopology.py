@@ -7,12 +7,12 @@ class PhysicalTopology():
         if xml.find('physical-topology'):
             pt = xml.find('physical-topology')
             self.name = pt.attrib["name"]
-            self.cores = pt.attrib["cores"]
-            self.slots = pt.attrib["slots"]
-            self.protection = pt.attrib["protection"]
-            self.sharing = pt.attrib["sharing"]
-            self.grooming = pt.attrib["grooming"]
-            self.slotsBandwidth = pt.attrib["slotsBandwidth"]
+            self.cores = int(pt.attrib["cores"])
+            self.slots = int(pt.attrib["slots"])
+            self.protection = bool(pt.attrib["protection"])
+            self.sharing = bool(pt.attrib["sharing"])
+            self.grooming = bool(pt.attrib["grooming"])
+            self.slotsBandwidth = float(pt.attrib["slotsBandwidth"])
 
             self.nodes = []
             self.links = []

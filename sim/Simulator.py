@@ -45,6 +45,9 @@ class Simulator():
             # st = MyStatistics()
 
             ##### Pega RSA #####
+            if myroot.findall('rsa'):
+                algorithm = myroot.find('rsa').attrib["module"]
+                print(algorithm)
 
             ##### ControlPlane #####
             # cp = ControlPlane()

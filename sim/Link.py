@@ -12,10 +12,10 @@ class Link():
         self.modulationLevel = []
 
         # TODO: Modificar o tipo de cores e slots
-        for c in range(int(cores)):
+        for c in range(cores):
             unit = []
             mod = []
-            for s in range(int(slots)):
+            for s in range(slots):
                 unit.append(True)
                 mod.append(-1)
             self.freeSlots.append(unit)
