@@ -9,7 +9,7 @@ class SimulationRunner():
         # Tracer
         # MyStatistics
         for event in events:
-            pass
+            cp.newEvent(event)
             # Tracer add
             # MyStatistics add
             # ControlPlane add

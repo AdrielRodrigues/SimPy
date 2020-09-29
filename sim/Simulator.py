@@ -1,11 +1,11 @@
 import xml.etree.ElementTree as ET
 from PhysicalTopology import PhysicalTopology
 from VirtualTopology import VirtualTopology
-# from EventScheduler import EventScheduler
+from EventScheduler import EventScheduler
 from TrafficGenerator import TrafficGenerator
 # from MyStatistics import MyStatistics
-# from ControlPlane import ControlPlane
-# from SimulationRunner import SimulationRunner
+from ControlPlane import ControlPlane
+from SimulationRunner import SimulationRunner
 
 class Simulator():
     def __init__(self):
@@ -18,6 +18,7 @@ class Simulator():
         self.verbose = verbose
         self.failure = failure
 
+        # TODO: Verificar a solução JSON para as configs da topologia
         mytree = ET.parse(simConfigFile)
         myroot = mytree.getroot()
 
@@ -36,10 +37,11 @@ class Simulator():
 
             ##### Event Scheduler #####
             # events = EventScheduler()
+            events = []
 
             ##### Traffic Generator #####
             traffic = TrafficGenerator(myroot, forcedLoad)
-            traffic.generateTraffic(pt, 1, seed)
+            traffic.generateTraffic(pt, events, seed)
 
             ##### MyStatistics #####
             # st = MyStatistics()
@@ -47,11 +49,11 @@ class Simulator():
             ##### Pega RSA #####
             if myroot.findall('rsa'):
                 algorithm = myroot.find('rsa').attrib["module"]
-                print(algorithm)
 
             ##### ControlPlane #####
-            # cp = ControlPlane()
+            cp = ControlPlane(algorithm, pt, vt)
 
             ##### SimulationRunner #####
-            # action = SimulationRunner()
+            action = SimulationRunner()
+            action.running(cp, events)
         return 1

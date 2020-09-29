@@ -4,8 +4,11 @@ class Flow():
         self.src = src
         self.dst = dst
         self.time = time
-        self.bw = bw
+        self.bw = float(bw)
         self.duration = duration
         self.cos = cos
         self.deadline = deadline
         self.accepted = False
+
+    def getRate(self):
+        return self.bw

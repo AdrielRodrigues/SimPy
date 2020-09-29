@@ -2,8 +2,8 @@ class Link():
     def __init__(self, xml, cores, slots):
         # TODO: Adicionar o tipo de cada uma variável
         self.id = xml.attrib["id"]
-        self.src = xml.attrib["source"]
-        self.dst = xml.attrib["destination"]
+        self.src = int(xml.attrib["source"])
+        self.dst = int(xml.attrib["destination"])
         self.delay = xml.attrib["delay"]
         self.bandwidth = xml.attrib["bandwidth"]
         self.weight = xml.attrib["weight"]

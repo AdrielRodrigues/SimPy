@@ -1,0 +1,5 @@
+Eu gerei essas calls no Java só pra conseguir testar o restante com tráfego.
+A intenção é descobrir como funciona a geração dos pontos e dos tempos.
+Os pontos são uniformemente distrubuídos, isso não deve ser complicado.
+O tempo utiliza umas seeds que ainda não fazem sentido.
+Ambos utilizam, no flexgridsim e no ONS, a class Distribution, que implementa a class Random.

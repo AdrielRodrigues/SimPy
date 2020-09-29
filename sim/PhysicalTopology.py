@@ -1,5 +1,6 @@
 # Prováveis problemas com tipo do dado. Ex: str ao invés de int
 from Link import Link
+from util.WeightedGraph import WeightedGraph
 
 
 class PhysicalTopology():
@@ -16,6 +17,7 @@ class PhysicalTopology():
 
             self.nodes = []
             self.links = []
+            self.matrix = []
 
             # TODO: Adicionar os elementos como Class em cada lista
             for elem in pt:
@@ -23,6 +25,18 @@ class PhysicalTopology():
                     self.nodes.append(node)
                 for link in elem.iter('link'):
                     self.links.append(Link(link, self.cores, self.slots))
+
+            for e in range(len(self.nodes)):
+                linhaMatrix = []
+                for f in range(len(self.nodes)):
+                    linhaMatrix.append(None)
+                self.matrix.append(linhaMatrix)
+
+            for l in self.links:
+                self.matrix[l.getSource()][l.getDestination()] = l
+
+
+            self.graph = self.doWeightedGraph()
         else:
             # TODO: Lidar com a exceção
             print("ERROR")
@@ -50,3 +64,17 @@ class PhysicalTopology():
 
     def getLink(self, link):
         return self.links[link]
+
+    def getLink(self, src, dst):
+        return self.matrix[src][dst]
+
+    def doWeightedGraph(self):
+        g = WeightedGraph(len(self.nodes))
+        for i in range(len(self.nodes)):
+            for j in range(len(self.nodes)):
+                if self.matrix[i][j] is not None:
+                    g.addEdge(i, j, self.matrix[i][j].getWeight())
+        return g
+
+    def getGraph(self):
+        return self.graph

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <flexgridsim version="0.4">
-    <rsa module="SSCAM"></rsa>
+    <rsa module="rsa"></rsa>
 
     <trace file="trace.tr"></trace>
 

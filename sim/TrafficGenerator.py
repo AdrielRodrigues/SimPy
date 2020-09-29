@@ -1,7 +1,9 @@
 from TrafficInfo import TrafficInfo
 from Flow import Flow
+from Event import Event
 from random import randrange
 from random import uniform
+import csv
 
 class TrafficGenerator():
     def __init__(self, xml, load):
@@ -33,6 +35,21 @@ class TrafficGenerator():
             self.numberCallTypes = len(self.callTypes)
 
     def generateTraffic(self, pt, events, seed):
+        with open("../events/calls.csv", "r") as arq:
+            leitor = csv.reader(arq, delimiter=",")
+            for linha in leitor:
+                id = linha[1]
+                src = linha[2]
+                dst = linha[3]
+                time = linha[8]
+                bw = linha[4]
+                duration = linha[5]
+                cos = linha[6]
+                deadline = linha[7]
+                events.append(Event(linha[0], Flow(id, src, dst, time, bw, duration, cos, deadline), linha[9]))
+                # Flow: id, src, dst, time, bw, duration, cos, deadline
+                # type, id, source, destination, rate, duration, cos, deadline, time, time
+        '''
         weightVector = []
         aux = 0
 
@@ -60,8 +77,10 @@ class TrafficGenerator():
 
             newFlow = Flow(id, src, dst, time, self.callTypes[tipo].getRate(), holdingTime, self.callTypes[tipo].getCos(), time+(holdingTime * 0.5))
 
+            # id, source, destination, rate, duration, cos, deadline, timeflow, timegeneral
             # time = uniform()
             # TODO: Events
             # TODO: Arrival
             # TODO: Departure
             id += 1
+        '''

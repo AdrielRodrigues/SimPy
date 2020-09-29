@@ -6,10 +6,10 @@ class VirtualTopology():
         if xml.find('virtual-topology'):
             vt = xml.find('virtual-topology')
             self.name = vt.attrib["name"]
-            self.nodes = pt.getNumNodes()
-            self.lightpaths = {}
-            self.pt = pt
-            self.nextLightpathID = 0
+        self.nodes = pt.getNumNodes()
+        self.lightpaths = {}
+        self.pt = pt
+        self.nextLightpathID = 0
 
     # TODO: Escolher entre ou dar suporte para Path ou Links+Slots
     def createLightpath(self, links, channelList, modulationLevel):
