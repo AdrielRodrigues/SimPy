@@ -1,6 +1,6 @@
 import math
 # from Path import Path
-
+from util.KShortestPath import KShortestPath
 class rsa():
     def __init__(self):
         pass
@@ -23,3 +23,8 @@ class rsa():
 
     def flowDeparture(self, flow):
         pass
+
+    def getKShortestPath(self, graph, src, dst, demand):
+        k = 3
+        kShortestPaths = KShortestPath()
+        kShortestPaths.dijkstraKShortestPaths(graph, src, dst, k)

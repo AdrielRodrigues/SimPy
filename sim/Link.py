@@ -1,12 +1,12 @@
 class Link():
     def __init__(self, xml, cores, slots):
         # TODO: Adicionar o tipo de cada uma variável
-        self.id = xml.attrib["id"]
+        self.id = int(xml.attrib["id"])
         self.src = int(xml.attrib["source"])
         self.dst = int(xml.attrib["destination"])
-        self.delay = xml.attrib["delay"]
-        self.bandwidth = xml.attrib["bandwidth"]
-        self.weight = xml.attrib["weight"]
+        self.delay = float(xml.attrib["delay"])
+        self.bandwidth = float(xml.attrib["bandwidth"])
+        self.weight = float(xml.attrib["weight"])
         # TODO: slots and cores
         self.freeSlots = []
         self.modulationLevel = []
@@ -44,3 +44,17 @@ class Link():
 
     def getDelay(self):
         return self.delay
+
+    def isSlotAvailable(self, slot):
+        if not self.freeSlots[slot.getCore()][slot.getSlot()]:
+            return False
+        return True
+
+    def reserveSlot(self, slot):
+        self.freeSlots[slot.getCore()][slot.getSlot()] = False
+
+    def releaseSlot(self, slot):
+        self.freeSlots[slot.getCore()][slot.getSlot()] = True
+
+    def setModulationLevel(self, slot, modulation):
+        self.modulationLevel[slot.getCore()][slot.getSlot()] = modulation

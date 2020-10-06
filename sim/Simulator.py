@@ -1,17 +1,19 @@
 import xml.etree.ElementTree as ET
-from PhysicalTopology import PhysicalTopology
-from VirtualTopology import VirtualTopology
-from EventScheduler import EventScheduler
-from TrafficGenerator import TrafficGenerator
+from sim.PhysicalTopology import PhysicalTopology
+from sim.VirtualTopology import VirtualTopology
+from sim.EventScheduler import EventScheduler
+from sim.TrafficGenerator import TrafficGenerator
 # from MyStatistics import MyStatistics
-from ControlPlane import ControlPlane
-from SimulationRunner import SimulationRunner
+from sim.ControlPlane import ControlPlane
+from sim.SimulationRunner import SimulationRunner
+
 
 class Simulator():
     def __init__(self):
         self.trace = False
         self.verbose = False
         self.failure = False
+
     # TODO: Lidar com exceções
     def execute(self, simConfigFile, trace, verbose, failure, forcedLoad, numberOfSimulations):
         self.trace = trace
@@ -27,6 +29,7 @@ class Simulator():
         # TODO: Eventualmente consertar os laços For
         # TODO: Implementar o TimeMillis
         for seed in range(1, numberOfSimulations + 1, 1):
+
             # begin = time
 
             ##### PhysicalTopology #####
