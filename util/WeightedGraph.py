@@ -22,3 +22,6 @@ class WeightedGraph():
 
     def size(self):
         return self.numNodes
+
+    def getWeight(self, source, destination):
+        return self.edges[source][destination]

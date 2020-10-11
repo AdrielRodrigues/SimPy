@@ -21,14 +21,15 @@ class Link():
             self.freeSlots.append(unit)
             self.modulationLevel.append(mod)
 
-    def getSpectrum(self):
-        return self.freeSlots
+    # TODO: Revisar Multideclaração
 
-    def getSpectrum(self, core):
-        return self.freeSlots[core]
-
-    def getSpectrum(self, core, slot):
-        return self.freeSlots[core][slot]
+    def getSpectrum(self, *args):
+        if len(args) == 0:
+            return self.freeSlots
+        elif len(args) == 1:
+            return self.freeSlots[args[0]]
+        elif len(args) == 2:
+            return self.freeSlots[args[0]][args[1]]
 
     def getID(self):
         return self.id

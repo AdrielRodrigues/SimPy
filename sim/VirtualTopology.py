@@ -26,7 +26,8 @@ class VirtualTopology():
                 dst = self.pt.getLink(path.getLink(path.getNumLinks()-1)).getDestination()
                 if src == dst:
                     dst = self.pt.getLink(path.getLink(path.getNumLinks() - 2)).getDestination()
-                lp = Lightpath(self.nextLightpathID, src, dst, path, modulationLevel)
+                id = self.nextLightpathID
+                lp = Lightpath(id, src, dst, path, modulationLevel)
                 self.lightpaths[id] = lp
                 self.nextLightpathID += 1
                 return id
@@ -35,7 +36,7 @@ class VirtualTopology():
 
     def canCreateLightpath(self, slots, modulationLevel):
         for s in slots:
-            if self.pt.getLink(s.getLink()).isSlotAvailable(s):
+            if not self.pt.getLink(s.getLink()).isSlotAvailable(s):
                 return False
         return True
 
@@ -59,3 +60,6 @@ class VirtualTopology():
     def removeLightpathFromPT(self, slots):
         for s in slots:
             self.pt.getLink(s.getLink()).releaseSlot(s)
+
+    def getLightPath(self, id):
+        return self.lightpaths.get(id)

@@ -1,5 +1,5 @@
 # Prováveis problemas com tipo do dado. Ex: str ao invés de int
-from Link import Link
+from sim.Link import Link
 from util.WeightedGraph import WeightedGraph
 
 
@@ -62,11 +62,11 @@ class PhysicalTopology():
     def getNumSlots(self):
         return self.slots
 
-    def getLink(self, link):
-        return self.links[link]
-
-    def getLink(self, src, dst):
-        return self.matrix[src][dst]
+    def getLink(self, *args):
+        if len(args) == 1:
+            return self.links[args[0]]
+        elif len(args) == 2:
+            return self.matrix[args[0]][args[1]]
 
     def doWeightedGraph(self):
         g = WeightedGraph(len(self.nodes))

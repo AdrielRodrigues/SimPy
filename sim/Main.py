@@ -1,5 +1,5 @@
 import sys
-from Simulator import *
+from sim.Simulator import Simulator
 
 # List size: XML seed [-trace] [-verbose] [-failure] [minload maxload step]
 args_size = len(sys.argv)
