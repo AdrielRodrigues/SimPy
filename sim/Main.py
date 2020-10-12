@@ -26,7 +26,7 @@ else:
     if 'failure' in sys.argv:
         failure = True
 
-for load in range(minload, maxload + step, step):
-    # TODO: Verificar as importações, colocar em pacotes, etc...
-    sim = Simulator()
-    sim.execute(simConfigFile, trace, verbose, failure, load, seed)
+    for load in range(minload, maxload + step, step):
+        # TODO: Verificar as importações, colocar em pacotes, etc...
+        sim = Simulator()
+        sim.execute(simConfigFile, trace, verbose, failure, load, seed)

@@ -10,8 +10,11 @@ class rsa():
         self.pt = pt
         self.vt = vt
         self.cp = cp
+        self.blocked = 0
+        self.success = 0
 
     def flowArrival(self, flow):
+        # TODO: Suporte a Multi-path
         id = -1
         guardBand = 1
         demandInSlots = math.ceil(flow.getRate() / self.pt.getSlotsCapacity())
@@ -26,7 +29,7 @@ class rsa():
         if id >= 0:
             flow.setLinks(path.getLinks())
             flow.setSlotList(path.getSlotList())
-            flow.setModulationLevel(0)
+            flow.setModulation(path.getModulation())
             lightpath = []
             lightpath.append(self.vt.getLightPath(id))
             if not self.cp.acceptFlow(flow.getID(), lightpath):

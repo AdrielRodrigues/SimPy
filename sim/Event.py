@@ -9,3 +9,6 @@ class Event():
 
     def getFlow(self):
         return self.flow
+
+    def getTime(self):
+        return self.time

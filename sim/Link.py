@@ -47,9 +47,9 @@ class Link():
         return self.delay
 
     def isSlotAvailable(self, slot):
-        if not self.freeSlots[slot.getCore()][slot.getSlot()]:
-            return False
-        return True
+        if self.freeSlots[slot.getCore()][slot.getSlot()]:
+            return True
+        return False
 
     def reserveSlot(self, slot):
         self.freeSlots[slot.getCore()][slot.getSlot()] = False

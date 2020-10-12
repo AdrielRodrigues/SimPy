@@ -47,19 +47,12 @@ class VirtualTopology():
 
     def removeLightPath(self, id):
         if id < 0:
+            # TODO: Desenvolver essa exceção
             pass
         else:
             if id not in self.lightpaths:
                 return False
-            lp = self.lightpaths.get(id)
-            self.removeLightpathFromPT(lp.getPath().getSlotList())
-            src = lp.getSource()
-            dst = lp.getDestination()
             self.lightpaths.pop(id)
-
-    def removeLightpathFromPT(self, slots):
-        for s in slots:
-            self.pt.getLink(s.getLink()).releaseSlot(s)
 
     def getLightPath(self, id):
         return self.lightpaths.get(id)

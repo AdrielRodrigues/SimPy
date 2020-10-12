@@ -11,6 +11,10 @@ class ControlPlane():
         self.vt = vt
         self.mappedFlows = {}
         self.activeFlows = {}
+
+        self.blocked = 0
+        self.success = 0
+
         # mappedPFlows = {}
         # protection = {}
         # Tracer
@@ -38,6 +42,7 @@ class ControlPlane():
             # TODO: Adicionar em Ativos
         elif event.getType() == 'Departure':
             flow = event.getFlow()
+            self.removeFlow(flow.getID())
             self.rsa.flowDeparture(flow)
 
     # def getFlow(self, id):
@@ -53,8 +58,15 @@ class ControlPlane():
         flow.setAccepted(True)
         return True
 
-    def removeFlow(self):
-        pass
+    def removeFlow(self, id):
+        if id in self.activeFlows:
+            flow = self.activeFlows.get(id)
+            if flow in self.mappedFlows:
+                lightpaths = self.mappedFlows.get(flow)
+                self.removePathFromPT(flow, lightpaths)
+                self.mappedFlows.pop(flow)
+                self.success += 1
+            self.activeFlows.pop(id)
 
     def blockFlow(self, id):
         if id not in self.activeFlows:
@@ -63,18 +75,32 @@ class ControlPlane():
         if flow in self.mappedFlows:
             return False
         self.activeFlows.pop(id)
-
+        self.blocked += 1
+        return True
         # TODO: tracer e statistics
 
     def canAddPathToPT(self, flow, lightpath):
         for l in lightpath:
-            for s in l.getSlotList():
+            for s in l.getPath().getSlotList():
                 if self.pt.getLink(s.getLink()).isSlotAvailable(s):
                     return False
         return True
 
     def addPathToPT(self, flow, lightpath):
-        pass
+        for l in lightpath:
+            for s in l.getPath().getSlotList():
+                self.pt.getLink(s.getLink()).reserveSlot(s)
 
     def newFlow(self, flow):
         self.activeFlows[flow.getID()] = flow
+
+    def removePathFromPT(self, flow, lightpath):
+        for l in lightpath:
+            for s in l.getPath().getSlotList():
+                self.pt.getLink(s.getLink()).releaseSlot(s)
+            self.vt.removeLightPath(l.getID())
+
+    def getBlocked(self):
+        return self.blocked
+    def getSuccess(self):
+        return self.success

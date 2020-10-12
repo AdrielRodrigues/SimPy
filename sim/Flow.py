@@ -13,8 +13,8 @@ class Flow():
         self.slotList = None
         self.modulationLevel = None
 
-    def getRate(self):
-        return self.bw
+    def getID(self):
+        return self.id
 
     def getSource(self):
         return self.src
@@ -22,8 +22,32 @@ class Flow():
     def getDestination(self):
         return self.dst
 
-    def getID(self):
-        return self.id
+    def getTime(self):
+        return self.time
+
+    def getRate(self):
+        return self.bw
+
+    def getDuration(self):
+        return self.duration
+
+    def getCOS(self):
+        return self.cos
+
+    def getDeadline(self):
+        return self.deadline
+
+    def getAccepted(self):
+        return self.accepted
+
+    def getLinks(self):
+        return self.links
+
+    def getSlotList(self):
+        return self.slotList
+
+    def getModulationLevel(self):
+        return self.modulationLevel
 
     def setAccepted(self, b):
         self.accepted = b
@@ -31,8 +55,8 @@ class Flow():
     def setLinks(self, links):
         self.links = links
 
-    def setSlotList(self, slots):
-        self.slotList = slots
+    def setSlotList(self, slotList):
+        self.slotList = slotList
 
-    def setModulationLevel(self, modulation):
-        self.modulationLevel = modulation
+    def setModulation(self, modulationLevel):
+        self.modulationLevel = modulationLevel

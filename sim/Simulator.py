@@ -1,12 +1,16 @@
 import xml.etree.ElementTree as ET
 from sim.PhysicalTopology import PhysicalTopology
 from sim.VirtualTopology import VirtualTopology
-from sim.EventScheduler import EventScheduler
+# from sim.EventScheduler import EventScheduler
 from sim.TrafficGenerator import TrafficGenerator
 # from MyStatistics import MyStatistics
 from sim.ControlPlane import ControlPlane
 from sim.SimulationRunner import SimulationRunner
 
+'''
+    Centralizes the simulation execution. Defines what the command line
+    arguments do, and extracts the simulation information from the XML file.
+'''
 
 class Simulator():
     def __init__(self):
@@ -59,4 +63,14 @@ class Simulator():
             ##### SimulationRunner #####
             action = SimulationRunner()
             action.running(cp, events)
+
+
+            '''
+                Somente para teste 
+            '''
+
+            print("=============== Blocked ===============")
+            print(cp.getBlocked())
+            print("=============== Success ===============")
+            print(cp.getSuccess())
         return 1
