@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from sim.PhysicalTopology import PhysicalTopology
 from sim.VirtualTopology import VirtualTopology
-# from sim.EventScheduler import EventScheduler
+from sim.EventScheduler import EventScheduler
 from sim.TrafficGenerator import TrafficGenerator
 # from MyStatistics import MyStatistics
 from sim.ControlPlane import ControlPlane
@@ -43,12 +43,13 @@ class Simulator():
             vt = VirtualTopology(myroot, pt)
 
             ##### Event Scheduler #####
-            # events = EventScheduler()
-            events = []
+            events = EventScheduler()
 
             ##### Traffic Generator #####
             traffic = TrafficGenerator(myroot, forcedLoad)
             traffic.generateTraffic(pt, events, seed)
+
+            print("Gerou tráfego")
 
             ##### MyStatistics #####
             # st = MyStatistics()

@@ -1,8 +1,10 @@
-from TrafficInfo import TrafficInfo
-from Flow import Flow
-from Event import Event
+from sim.TrafficInfo import TrafficInfo
+from sim.Flow import Flow
+from sim.Event import Event
 from random import randrange
 from random import uniform
+import random
+from util.Distribution import Distribution
 import csv
 
 class TrafficGenerator():
@@ -10,7 +12,8 @@ class TrafficGenerator():
         if xml.find('traffic'):
             traffic = xml.find('traffic')
             self.calls = int(traffic.attrib["calls"])
-            self.load = int(traffic.attrib["load"])
+            # self.load = int(traffic.attrib["load"])
+            self.load = load
             self.maxrate = int(traffic.attrib["max-rate"])
             self.numberCallTypes = 0
 
@@ -35,7 +38,10 @@ class TrafficGenerator():
             self.numberCallTypes = len(self.callTypes)
 
     def generateTraffic(self, pt, events, seed):
-        with open("../events/calls.csv", "r") as arq:
+
+        # Extrai os fluxos do arquivo de forma estática
+
+        '''with open("../events/calls.csv", "r") as arq:
             leitor = csv.reader(arq, delimiter=",")
             for linha in leitor:
                 id = linha[1]
@@ -49,7 +55,9 @@ class TrafficGenerator():
                 events.append(Event(linha[0], Flow(id, src, dst, time, bw, duration, cos, deadline), linha[9]))
                 # Flow: id, src, dst, time, bw, duration, cos, deadline
                 # type, id, source, destination, rate, duration, cos, deadline, time, time
-        '''
+
+                # exp = -(ln(random.random(0, 1)) / a'''
+
         weightVector = []
         aux = 0
 
@@ -60,27 +68,43 @@ class TrafficGenerator():
 
         meanArrivalTime = float((self.meanHoldingTime * (self.meanRate / self.maxrate)) / self.load)
 
-        # type, src, dst
         time = 0.0
         id = 0
         numNodes = pt.getNumNodes()
-        # TODO: Distribution
+
+        dist1 = Distribution(1, seed)
+        dist2 = Distribution(2, seed)
+        dist3 = Distribution(3, seed)
+        dist4 = Distribution(4, seed)
 
         for c in range(self.calls):
-            tipo = randrange(len(weightVector))
-            src = dst = randrange(numNodes)
+            if id % 1000 == 0:
+                print(id)
+            type = weightVector[dist1.nextInt(self.totalWeight)]
+            src = dst = dist2.nextInt(numNodes)
 
             while (dst == src):
-                dst = randrange(numNodes)
+                # dst = dist2.nextInt(numNodes)
+                dst = random.randint(0, numNodes - 1)
 
-            holdingTime = uniform(0.0, meanArrivalTime)
+            holdingTime = dist4.nextExponential(self.callTypes[type].getHoldingTime())
 
-            newFlow = Flow(id, src, dst, time, self.callTypes[tipo].getRate(), holdingTime, self.callTypes[tipo].getCos(), time+(holdingTime * 0.5))
+            newFlow = Flow(id, src, dst, time, self.callTypes[type].getRate(), holdingTime, self.callTypes[type].getCos(), time+(holdingTime * 0.5))
 
-            # id, source, destination, rate, duration, cos, deadline, timeflow, timegeneral
-            # time = uniform()
-            # TODO: Events
-            # TODO: Arrival
-            # TODO: Departure
+            '''------------------------------------------------------------------
+                OS FLUXOS PRECISAM SER ORGANIZADOS EM ORDEM CRESCENTE DE TEMPO
+                NO MOMENTO, ELES AINDA ESTÃO SENDO ENFILEIRADOS CONFORME A ORDEM
+                EM QUE ELES SÃO INCLUÍDOS
+                
+                EDIT: A ORDENAÇÃO DOS EVENTOS PARECE SER UM POUCO MAIS COMPLEXA.
+                AINDA ASSIM, POR ENQUANTO É MAIS SIMPLES CONSIDERAR QUE OS EVENTOS
+                SEGUEM ORDEM CRONOLÓGICA
+            ------------------------------------------------------------------'''
+
+            events.addEvent(Event('Arrival', newFlow, time))
+
+            time += dist3.nextExponential(meanArrivalTime)
+
+            events.addEvent(Event('Departure', newFlow, time + holdingTime))
+
             id += 1
-        '''

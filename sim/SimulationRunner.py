@@ -8,7 +8,7 @@ class SimulationRunner():
         # event = Event()
         # Tracer
         # MyStatistics
-        for event in events:
+        for event in events.getEvents():
             cp.newEvent(event)
             # Tracer add
             # MyStatistics add
