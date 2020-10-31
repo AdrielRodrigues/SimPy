@@ -7,7 +7,8 @@ class EventScheduler():
     # TODO: Elaborar um método mais eficiente de enfileirar os eventos
 
     def addEvent(self, event):
-        if len(self.events) == 0:
+        self.events.append(event)
+        '''if len(self.events) == 0:
             self.events.append(event)
             self.c_moment = 0
             self.c_position = 0
@@ -20,7 +21,13 @@ class EventScheduler():
                     return
                 position += 1
             self.events.append(event)
-            self.c_position = len(self.events) - 1
+            self.c_position = len(self.events) - 1'''
 
     def getEvents(self):
         return self.events
+
+    def organize(self):
+        self.events.sort(key=self.ascending)
+
+    def ascending(self, event):
+        return event.getTime()

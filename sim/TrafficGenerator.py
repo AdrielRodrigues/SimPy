@@ -78,8 +78,6 @@ class TrafficGenerator():
         dist4 = Distribution(4, seed)
 
         for c in range(self.calls):
-            if id % 1000 == 0:
-                print(id)
             type = weightVector[dist1.nextInt(self.totalWeight)]
             src = dst = dist2.nextInt(numNodes)
 
@@ -108,3 +106,5 @@ class TrafficGenerator():
             events.addEvent(Event('Departure', newFlow, time + holdingTime))
 
             id += 1
+
+        events.organize()
