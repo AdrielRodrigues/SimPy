@@ -108,12 +108,11 @@ class Distribution():
         multiplier = 0x5DEECE66D
         self.seed = self.seeds[(seq_num - 1) * 25 + (seed_num - 1)]
         self.seed = self.seed ^ multiplier
+        random.seed(self.seed)
 
     def nextExponential(self, b):
-        random.seed(self.seed)
         randx = random.random()
         return (-1 * b * log(randx))
 
     def nextInt(self, num):
-        random.seed(self.seed)
         return random.randint(0, num - 1)
