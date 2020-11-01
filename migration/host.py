@@ -3,11 +3,6 @@ from typing import List
 
 
 class Process:
-    """
-    the demand should be specified as the number of instructions per
-    second that the process is willing to get.
-    """
-
     def __init__(self, demand: float):
         self.demand = demand
 
