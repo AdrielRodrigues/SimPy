@@ -52,7 +52,7 @@ class Host:
     total_memory        - "
     system_memory       - memory consumed by the host system
     virtualization_cost - proportion of cpu lost due to virtualization
-    concurrency_cost   - proportion of cpu lost due to core concurrency
+    concurrency_cost    - proportion of cpu lost due to core concurrency
     vms                 - list of Virtual machines
     """
     def __init__(self, cpu_num, total_memory, system_memory, virtualization_cost, concurrency_cost, vms: List[VM]):
